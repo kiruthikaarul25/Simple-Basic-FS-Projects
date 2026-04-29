@@ -1,0 +1,27 @@
+package com.example.demo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.entity.User;
+import com.example.demo.repository.UserRepository;
+
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository repo;
+
+    public void register(User user) {
+        repo.save(user);
+    }
+
+    public User login(String email, String password) {
+        User user = repo.findByEmail(email);
+
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        return null;
+    }
+}
